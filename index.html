@@ -94,8 +94,8 @@ h2{font-size:clamp(2.6rem,8vw,6.5rem);line-height:.95}h2 i,h1 i,.nav__brand i,.e
 .process ol{max-width:1300px;margin:0 auto;display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
 .process li{border-top:2px solid var(--red);padding-top:1.2rem}.process li span{font:400 3.4rem/1 var(--disp);color:var(--red)}.process h3{font-size:2.2rem;margin:.4rem 0 .6rem}.process p{color:var(--mute)}
 /* magazine + words */
-.mag{display:grid;gap:2rem;max-width:1300px;margin:0 auto 1.5rem;align-items:center}.mag__txt p{color:var(--mute);max-width:36rem;margin:1rem 0 1.4rem}
-.strip{display:flex;gap:1rem;overflow-x:auto;padding:1rem 0 1.2rem;margin:0 auto;max-width:1300px;scroll-snap-type:x proximity}.strip li{flex:0 0 min(60vw,230px);scroll-snap-align:start}
+.mag{display:grid;grid-template-columns:minmax(0,1fr);gap:2rem;max-width:1300px;margin:0 auto 1.5rem;align-items:center}.mag__txt p{color:var(--mute);max-width:36rem;margin:1rem 0 1.4rem}
+.strip{display:flex;gap:1rem;width:100%;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding:1rem 0 1.2rem;margin:0 auto;max-width:1300px;scroll-snap-type:x proximity}.strip li{flex:0 0 min(60vw,230px);scroll-snap-align:start}
 .pg{all:unset;display:block;cursor:zoom-in;border-radius:.7rem;overflow:hidden}.pg img{width:100%;height:auto;transition:transform .5s}.pg:hover img{transform:scale(1.04)}
 @media(min-width:860px){.mag{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:4rem}}
 .poem{max-width:44rem;margin:0 auto 3rem 0;max-width:1300px;padding-top:2rem;border-top:1px solid var(--line)}.poem>*{max-width:44rem}
