@@ -369,9 +369,10 @@ vProbe.style.cssText='position:fixed;left:0;top:0;width:1px;height:100svh;visibi
 document.body.appendChild(vProbe);
 function stableVH(){var h=vProbe.offsetHeight;return h>0?h:Math.min(innerHeight,document.documentElement.clientHeight||innerHeight);}
 /* A tall section pins once its bottom edge is on screen, then HOLDS there for a short scroll distance
-   (margin-bottom) so its last lines can be read before the next section starts sliding over it. */
+   (margin-bottom) so its last lines can be read before the next section starts sliding over it.
+   Kept short (about 13% of the screen) so the pause feels like a beat, not like the page has ended. */
 function stack(){
-  var vh=stableVH(),hold=Math.round(Math.min(360,Math.max(140,vh*.35))),last=secs.length-1;
+  var vh=stableVH(),hold=Math.round(Math.min(160,Math.max(90,vh*.13))),last=secs.length-1;
   secs.forEach(function(s,i){
     var h=s.offsetHeight,tall=h>vh&&i<last;
     s.style.top=Math.min(0,vh-h)+'px';
