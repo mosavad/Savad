@@ -81,6 +81,8 @@ h2{font-size:clamp(2.6rem,8vw,6.5rem);line-height:.95}h2 i,h1 i,.nav__brand i,.e
 .work__foot{padding:2rem var(--g) 0;display:flex;justify-content:space-between;align-items:center}
 .work__count{font:400 1.4rem var(--disp);letter-spacing:.06em;color:var(--mute)}.work__count b{color:var(--cream);font-weight:400;font-size:2.2rem}
 .work__arrows{display:flex;gap:.6rem}.work__arrows button{width:3.2rem;height:3.2rem;border-radius:50%;border:1.5px solid var(--cream);background:none;font-size:1.2rem;cursor:pointer;transition:.25s}.work__arrows button:hover{background:var(--red);border-color:var(--red)}
+/* phones: pull the counter + arrows up into the empty space under the cards so they're on screen together with the "Selected work" heading */
+@media(max-width:700px){.work__foot{position:relative;z-index:101;margin-top:min(0px,calc((clamp(220px,62vw,340px)*1.25 - clamp(400px,66vh,600px))/2))}}
 /* about */
 .about{display:grid;gap:3rem;align-items:center;max-width:1300px;margin:0 auto;width:100%}
 .about__photo{position:relative}.jelly-box{position:relative;display:block;border-radius:1.6rem;overflow:hidden;aspect-ratio:4/5;background:#000}.jelly-box img,.jelly-box canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
