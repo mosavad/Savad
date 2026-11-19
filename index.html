@@ -388,6 +388,17 @@ if('IntersectionObserver' in window&&!reduce){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
   rv.forEach(function(el,i){el.style.setProperty('--d',((i%3)*.08)+'s');io.observe(el);});
 }else rv.forEach(function(el){el.classList.add('in');});
+/* ---- early reveals (only these two): Next button appears with the "Selected work" heading,
+   About text starts fading in as soon as it enters the screen, while the photo is still fully visible ---- */
+if('IntersectionObserver' in window&&!reduce){
+  var earlyPairs=[[$('.work__head'),$('.work__foot')],[$('.about__body'),$('.about__body')]];
+  var earlyIO=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;
+    earlyPairs.forEach(function(p){if(p[0]===e.target&&p[1])p[1].classList.add('in');});
+    earlyIO.unobserve(e.target);
+  });},{threshold:0,rootMargin:'0px'});
+  earlyPairs.forEach(function(p){if(p[0])earlyIO.observe(p[0]);});
+}
 /* ---- carousel ---- */
 var car=$('#car'),track=$('#track'),cards=$$('.card',track),N=cards.length,pos=0,target=0,vel=0,drag=false,sx=0,sp=0,moved=0,run=false,lastPos=0;
 function step(){return cards[0].offsetWidth+26;}
