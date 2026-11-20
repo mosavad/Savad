@@ -213,7 +213,7 @@ body{background:#000}
       <div class="verse" lang="ml">
         <p>മണി അഞ്ചടിച്ചപ്പോൾ<br>ഉറക്കച്ചടവ് മാറ്റി<br>ഞാൻ ഉണർന്നെണീറ്റു.</p>
         <p>അടുത്ത മുറിയിൽ നിന്നൊരു –<br>അമ്മയുടെ ഹായ്;<br>തിരക്കിട്ടൊരു ഹായ് തിരിച്ചയച്ച്<br>സ്വിഗ്ഗിയില്‍ ഒരു ചായ പറഞ്ഞു.</p>
-        <div class="more" id="more-1">
+        <div class="more" id="more-1" hidden>
           <p>പ്രഭാതകർമങ്ങളെല്ലാം<br>യന്ത്രങ്ങൾക്കു കൈമാറി,<br>പ്രാതലും കഴിച്ചിറങ്ങുമ്പോൾ<br>പകൽച്ചക്രം തിരിഞ്ഞുതുടങ്ങി.</p>
           <p>മണി ഒമ്പതടിച്ചപ്പോൾ<br>ഇ- ഓഫീസിലേക്ക് ഞാന്‍ നീങ്ങി.<br>ജോലിക്കായി റോബോട്ടുകളെല്ലാം<br>സജ്ജരാണെന്ന് ഉറപ്പുവരുത്തി.</p>
           <p>നേരെ വാട്ട്സാപ്പിലേക്ക്;<br>വൈകീട്ട് ഇൻസ്റ്റാ പാർട്ടിയും കഴിഞ്ഞ്<br>ഇ-ലോകത്തിന്റെ വിശാലവിണ്ണിൽ<br>പാടിപ്പറന്ന് ഞാൻ ഉല്ലസിച്ചു.</p>
@@ -221,14 +221,14 @@ body{background:#000}
           <p>കാലചക്രങ്ങളെ ഭേദിച്ചു കൊണ്ട്<br>മനുഷ്യരാശി എന്തെന്നറിയാതെ<br>മനുഷ്യയന്ത്രം<br>കറങ്ങിക്കൊണ്ടിരുന്നു…</p>
         </div>
       </div>
-      
+      <button class="toggle" type="button" aria-expanded="false" aria-controls="more-1"><span>Read the full poem</span><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l6 6 6-6"/></svg></button>
       <div class="poem-desc"><p class="meta">Malayalam poem</p><p>A Malayalam free-verse poem exploring how technology shapes everyday life, from waking up to going to bed. It highlights our growing dependence on digital platforms, automation, and virtual communication, replacing meaningful face-to-face interactions. It reflects on how technology turns daily life into repetitive routines and gradually changes human relationships, habits, and experiences.</p></div>
     </article>
 <article class="poem">
       <h3 lang="ml">ചിലന്തി</h3>
       <div class="verse" lang="ml">
         <p>മങ്ങിയ വെട്ടത്തിൽ<br>മെടഞ്ഞെടുത്ത<br>നാലു മൺ<br>ചുമരുകൾക്കുള്ളിൽ<br>ഘനീഭവിച്ചൊരു<br>നൂൽവീട്<br>നെയ്തെടുത്തു.</p>
-        <div class="more" id="more-2">
+        <div class="more" id="more-2" hidden>
           <p>ഇലയുടെ നേർത്ത<br>താളത്തില്‍ പോലും<br>ശ്രദ്ധ ചെലുത്തി<br>ജാഗരൂകരായി<br>കാലനിയതിയിൽ<br>പലരും കടന്നുപോയി.</p>
           <p>ചുവന്ന ധാരയിൽ<br>കണ്ണുനട്ട്<br>ശിഥിലരായവർ;</p>
           <p>ചുവരുകളിൽ<br>രക്തത്തിൻ കറ<br>ബാക്കിയാക്കി<br>പറന്നകന്നവർ;</p>
@@ -236,7 +236,7 @@ body{background:#000}
           <p>അവർ —<br>കാലാന്തരത്തിൽ<br>മറവിയുടെ മറവിൽ<br>നിധി തേടി<br>പാരിതിൽ അലഞ്ഞു<br>നടന്നകന്നു.</p>
         </div>
       </div>
-      
+      <button class="toggle" type="button" aria-expanded="false" aria-controls="more-2"><span>Read the full poem</span><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l6 6 6-6"/></svg></button>
       <div class="poem-desc"><p class="meta">Malayalam poem</p><p>A Malayalam free-verse poem exploring oppression, violence, and the human cost of standing against injustice. Through dark imagery and symbolic references to a spider’s web, bloodstained walls, and selfless sacrifice, it reflects on the lives lost in the face of violence, the silencing of dissenting voices, and the fading traces of their struggles with the passage of time.</p></div>
     </article>
   </div>
@@ -276,6 +276,10 @@ body{background:#000}
   $('#pPrev').addEventListener('click',function(){show(cur-1);});$('#pNext').addEventListener('click',function(){show(cur+1);});$('#pClose').addEventListener('click',function(){dlg.close();});
   $('#sPrev').addEventListener('click',function(){showStack(si-1);});$('#sNext').addEventListener('click',function(){showStack(si+1);});
   dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
+  /* ---- poems ---- */
+  $$('.toggle').forEach(function(b){b.addEventListener('click',function(){
+    var m=document.getElementById(b.getAttribute('aria-controls')),o=b.getAttribute('aria-expanded')==='true';
+    m.hidden=o;b.setAttribute('aria-expanded',o?'false':'true');b.querySelector('span').textContent=o?'Read the full poem':'Show less';});});
   dlg.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')show(cur-1);if(e.key==='ArrowRight')show(cur+1);if(stack.length&&(e.key==='ArrowUp'||e.key==='ArrowDown')){e.preventDefault();showStack(si+(e.key==='ArrowDown'?1:-1));}});
   /* highlight the category chip for the section on screen */
   var links=$$('.chips a'),secs=$$('.cat');
