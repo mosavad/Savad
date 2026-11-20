@@ -259,6 +259,12 @@ h2{font-size:clamp(2.3rem,3.9vw,3.6rem);line-height:1}
 .process h3{font-size:clamp(1.9rem,3vw,3.6rem);margin:.6rem 0 clamp(.7rem,2vh,1.4rem)}
 .process p{font-size:clamp(1rem,1.38vw,1.5rem);line-height:1.7;max-width:36rem}
 }
+/* Magazine: fill one screen on desktop so the next section's heading never shows under it */
+@media(min-width:1025px){
+.sheet>#magazine{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:calc(max(4.6rem,6vw) + clamp(.8rem,3vh,2rem));padding-bottom:clamp(1.6rem,5vh,3.5rem)}
+.sheet>#magazine>h2,.sheet>#magazine>.mag{width:100%}
+.sheet>#magazine>.mag{margin-bottom:0}
+}
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
