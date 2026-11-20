@@ -81,6 +81,28 @@ main{max-width:1380px;margin:0 auto;padding:0 var(--g)}
 .verse p{margin-bottom:1.2rem;font-family:var(--ml);font-size:1.15rem;line-height:1.9}
 .foot{max-width:1380px;margin:0 auto;padding:4rem var(--g) 3rem;display:flex;flex-wrap:wrap;gap:1.2rem 2rem;justify-content:space-between;align-items:center}
 .foot p{font:400 clamp(1.3rem,3vw,2rem)/1.15 var(--disp);text-transform:uppercase;max-width:30rem}.foot small{display:block;width:100%;color:var(--mute);font-weight:600}
+
+/* ===== DESKTOP-ONLY REFINEMENT (>=1025px). Phones/tablets untouched. ===== */
+@media(min-width:1025px){
+:root{--g:clamp(2rem,5.5vw,5rem)}
+body{font-size:1rem;padding-top:3.8rem}
+.nav{padding:1.1rem var(--g)}.nav__brand{font-size:1.5rem}.nav nav{gap:2rem}.nav nav a{font-size:.74rem}
+.top{max-width:1240px;padding:3.2rem var(--g) 1.2rem}
+.top h1{font-size:clamp(2.8rem,5.2vw,4.6rem)}.top p{font-size:1rem;max-width:34rem}
+.chips{top:3.5rem}.chips ul{max-width:1240px;padding:.7rem var(--g)}.chips a{font-size:.72rem;padding:.45rem .95rem}
+main{max-width:1240px}
+.cat{padding:3.5rem 0 .8rem}
+.cat__head h2{font-size:clamp(2.2rem,3.6vw,3.2rem)}.cat__n{font-size:1.1rem}
+.cat__intro{font-size:.98rem;margin:.7rem 0 1.4rem}
+.works{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2.2rem 1.6rem;padding-bottom:2.5rem}
+.work__cap h3{font-size:1.35rem}.work__cap p{font-size:.9rem}
+.poems{max-width:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.3rem;align-items:start}
+.poems .poem{padding:1.7rem 1.6rem;border:1px solid var(--line);border-radius:1.3rem;background:rgba(255,255,255,.02)}.poems .poem>*{max-width:none}
+.poem h3{font-size:1.7rem}.verse p{font-size:1rem;line-height:1.85;margin-bottom:1rem}
+.poem-desc{font-size:.88rem;line-height:1.6}
+.foot{max-width:1240px;padding:3rem var(--g) 2.2rem}.foot p{font-size:1.4rem}
+.player__box{width:min(980px,92vw)}
+}
 </style>
 </head>
 <body id="top">
