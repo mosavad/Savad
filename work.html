@@ -103,6 +103,46 @@ main{max-width:1240px}
 .foot{max-width:1240px;padding:3rem var(--g) 2.2rem}.foot p{font-size:1.4rem}
 .player__box{width:min(980px,92vw)}
 }
+
+/* ===== CONSISTENT ARTWORK FRAMES =====
+   Gallery frames use a fixed ratio; artwork itself is contained, never cropped. */
+.work__img{
+  position:relative;
+  aspect-ratio:4 / 5;
+  background:#000;
+  isolation:isolate;
+}
+.work__img img{
+  width:100%;
+  height:100%;
+  aspect-ratio:4 / 5;
+  object-fit:contain;
+  object-position:center;
+  background:#000;
+  transition:none;
+}
+.work__img:hover img{transform:none}
+.work__img::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  border-radius:inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.20),
+    inset 0 0 18px rgba(255,255,255,.10);
+  background:
+    linear-gradient(to right, rgba(255,255,255,.10), transparent 3%, transparent 97%, rgba(255,255,255,.10)),
+    linear-gradient(to bottom, rgba(255,255,255,.10), transparent 3%, transparent 97%, rgba(255,255,255,.10));
+}
+/* Every artwork in Calligrams is square, so that section stays 1:1. */
+#calligrams .work__img,
+#calligrams .work__img img{
+  aspect-ratio:1 / 1;
+}
+#calligrams .work__img img{height:100%}
+
 </style>
 </head>
 <body id="top">
