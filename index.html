@@ -265,16 +265,9 @@ h2{font-size:clamp(2.3rem,3.9vw,3.6rem);line-height:1}
 .sheet>#magazine>h2,.sheet>#magazine>.mag{width:100%}
 .sheet>#magazine>.mag{margin-bottom:0}
 }
-/* Desktop: every section fills exactly one screen, so each one pins at the top and the next slides over it the same way */
+/* Desktop: short sections get the same one-screen height as the others, so they stop at the same place. Inner layout untouched. */
 @media(min-width:1025px){
-.sheet>.work,.sheet>.poems{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
-.sheet>.about{min-height:100svh;align-content:center}
-.sheet>.about .about__body p{font-size:clamp(.85rem,1.75vh,.95rem);line-height:1.6;max-width:none;margin-bottom:clamp(.5rem,1.2vh,.8rem)}
-.sheet>.about .about__body .about__lead{font-size:clamp(.95rem,2vh,1.08rem)}
-.sheet>.about .about__body h2{margin-bottom:clamp(.6rem,1.6vh,1.1rem)}
-.sheet>.about .about__photo{max-width:min(400px,calc((100svh - 13rem)*.8));width:100%}
-.sheet>.work>*,.sheet>.poems>*{width:100%}
-.sheet>.about{padding-top:calc(max(4.6rem,6vw) + clamp(.4rem,2vh,1.2rem));padding-bottom:clamp(1.6rem,5vh,3.5rem)}
+.sheet>.work,.sheet>.about,.sheet>.poems{min-height:100svh}
 }
 /* How I Work: desktop-only redesign (phones/tablets untouched) */
 @media(min-width:1025px){
