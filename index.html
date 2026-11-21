@@ -590,7 +590,6 @@ function rmMeasure(){
     var sec=g.sec,ws=g.wraps;
     ws.forEach(function(w){w.classList.remove('is-open');w.style.maxHeight='';w._rm.btn.textContent='… Read more';w._rm.btn.style.display='none';});
     if(!on)return;
-    if(g.full)return; /* poems: show the whole description, cards just stretch to equal height */
     var vh=stableVH(),oz=sec.style.zoom,oz2=sec.style.getPropertyValue('--z'),omh=sec.style.minHeight;
     sec.style.zoom='';sec.style.removeProperty('--z');sec.style.minHeight='0';
     ws.forEach(function(w){var cs=getComputedStyle(w._rm.first);w._lh=parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.6;w._tot=Math.round(w.scrollHeight/w._lh);});
@@ -598,7 +597,11 @@ function rmMeasure(){
     function apply(n){ws.forEach(function(w){if(w._tot>n)w.style.maxHeight=Math.round(w._lh*n)+'px';else w.style.maxHeight='';});}
     for(var n=maxN;n>=3;n--){apply(n);if(sec.offsetHeight<=vh-2){pick=n;break;}pick=3;}
     apply(pick);
-    ws.forEach(function(w){if(w._tot>pick){w._rm.btn.style.display='';w.style.setProperty('--rm-bg',rmBg(w));}else{w.style.maxHeight='';}});
+    /* Cards are the same height; a card with spare room (e.g. no button) shows more lines, and "Read more" stays only where text is really cut. */
+    var H=sec.offsetHeight;
+    ws.forEach(function(w){w._k=pick;if(w._tot<=pick)return;
+      while(w._k<w._tot){w.style.maxHeight=Math.round(w._lh*(w._k+1))+'px';if(sec.offsetHeight>H+.5){w.style.maxHeight=Math.round(w._lh*w._k)+'px';break;}w._k++;}});
+    ws.forEach(function(w){if(w._tot>w._k){w._rm.btn.style.display='';w.style.setProperty('--rm-bg',rmBg(w));}else{w.style.maxHeight='';}});
     sec.style.minHeight=omh;if(oz){sec.style.zoom=oz;sec.style.setProperty('--z',oz2);}
   });
 }
@@ -607,7 +610,7 @@ function rmMeasure(){
   if(body){var ps=[].filter.call(body.children,function(c){return c.tagName==='P'&&!c.classList.contains('about__lead')&&!c.classList.contains('kicker');});
     if(ps.length){var w=document.createElement('div');body.insertBefore(w,ps[0]);ps.forEach(function(p){w.appendChild(p);});rmMake(w,ps[0]);rmGroups.push({sec:$('#about'),wraps:[w]});}}
   var pw=[];[].forEach.call($$('.poem-desc'),function(d){var ps=d.querySelectorAll('p:not(.meta)');if(!ps.length)return;var p=ps[0];var w=document.createElement('div');p.parentNode.insertBefore(w,p);w.appendChild(p);rmMake(w,p);pw.push(w);});
-  if(pw.length)rmGroups.push({sec:$('#poems'),wraps:pw,full:true});
+  if(pw.length)rmGroups.push({sec:$('#poems'),wraps:pw});
   rmMeasure();
   function again(){rmMeasure();if(typeof fit==='function'&&typeof zoomOK!=='undefined')fit();}
   addEventListener('resize',rmMeasure);if(rmMQ.addEventListener)rmMQ.addEventListener('change',again);
@@ -624,7 +627,7 @@ function fit(){
   secs.forEach(function(s,i){
     if(i===secs.length-1)return;
     s.style.zoom='';s.style.removeProperty('--z');
-    if(!deskMQ.matches||!zoomOK||(s.id==='poems'&&rmMQ.matches))return;
+    if(!deskMQ.matches||!zoomOK)return;
     var f=1;
     for(var k=0;k<8;k++){
       var h=s.getBoundingClientRect().height;
