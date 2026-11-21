@@ -540,13 +540,33 @@ function stableVH(){var h=vProbe.offsetHeight;return h>0?h:Math.min(innerHeight,
 function stack(){
   var vh=stableVH(),hold=Math.round(Math.min(160,Math.max(90,vh*.13))),last=secs.length-1;
   secs.forEach(function(s,i){
-    var h=s.offsetHeight,tall=h>vh+2&&i<last;
-    s.style.top=Math.min(0,vh-h)+'px';
+    var h=Math.round(s.getBoundingClientRect().height),tall=h>vh+2&&i<last;
+    s.style.top=(h>vh+2?vh-h:0)+'px';
     s.style.marginBottom=tall?hold+'px':'';
     s.style.setProperty('--fill',tall?'160px':'0px');
   });
 }
-addEventListener('resize',stack);addEventListener('orientationchange',stack);stack();
+/* Desktop: a section taller than the screen is scaled down uniformly until it fits one screen,
+   so every section stops at the very top and the next slides over it, at any laptop size. */
+var deskMQ=matchMedia('(min-width:1025px)');
+function fit(){
+  var vh=stableVH();
+  secs.forEach(function(s,i){
+    if(i===secs.length-1)return;
+    s.style.zoom='';
+    if(!deskMQ.matches)return;
+    var f=1;
+    for(var k=0;k<8;k++){
+      var h=s.getBoundingClientRect().height;
+      if(Math.abs(h-vh)<=1||(h<vh&&f>=1))break;
+      f=Math.max(.55,f*vh/h);s.style.zoom=f.toFixed(4);
+    }
+    if(f>=1)s.style.zoom='';
+  });
+  stack();
+}
+addEventListener('resize',fit);addEventListener('orientationchange',fit);stack();fit();
+addEventListener('load',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
 if('ResizeObserver' in window){var ro=new ResizeObserver(stack);secs.forEach(function(s){ro.observe(s);});}
 /* ---- header + in-page links: jump to a section from anywhere ----
    The sections are sticky, so once you scroll past one the browser's own #anchor jump has nowhere to go.
