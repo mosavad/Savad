@@ -311,6 +311,12 @@ html.rm-on .poem:not(.open) .t6{display:none}
 html.rm-on .sheet>.about{align-content:center}
 .rm-more:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 .rm.is-open>.rm-more{position:static;display:block;margin-top:.5rem;padding:0;background:none;line-height:1.4}
+/* toolkit note: sits right under the heading, all screen sizes */
+section.tools>h2#toolsTitle{margin-bottom:.8rem}
+section.tools>.tools__note{max-width:1300px;margin:0 auto 3rem;color:var(--mute);font-size:1.05rem;line-height:1.5}
+@media(max-width:1024px){section.tools>.tools__note{max-width:1160px;margin-bottom:2rem;font-size:1rem}}
+@media(max-width:560px){section.tools>.tools__note{font-size:.95rem}}
+@media(min-width:1025px){section.tools>.tools__note{width:100%;max-width:1400px;margin:0 auto clamp(1.6rem,6vh,4.2rem);font-size:clamp(.95rem,1.25vw,1.3rem)}}
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -383,6 +389,7 @@ html.rm-on .sheet>.about{align-content:center}
 
     <section class="tools" id="tools" aria-labelledby="toolsTitle">
       <h2 id="toolsTitle" class="reveal" data-r="up">The toolkit</h2>
+      <p class="tools__note reveal" data-r="up">Some of these tools I know well, others I’m still learning, and I’m always improving.</p>
       <div class="tools__grid">
         <div class="reveal" data-r="up2"><h3><span><b>01.</b> <em>Graphic &amp; Editorial Design</em></span></h3><ul><li><span class="ico" style="--c:#31a8ff">Ps</span>Adobe Photoshop</li><li><span class="ico" style="--c:#ff9a00">Ai</span>Adobe Illustrator</li><li><span class="ico" style="--c:#ff3366">Id</span>Adobe InDesign</li></ul></div>
         <div class="reveal" data-r="up"><h3><span><b>02.</b> <em>Illustration &amp; Art</em></span></h3><ul><li><span class="ico" style="--c:#4fd1c5">Pc</span>Procreate</li><li><span class="ico" style="--c:#f6ece4">Td</span>Traditional Drawing</li><li><span class="ico" style="--c:#f6ece4">Cg</span>Calligraphy</li></ul></div>
