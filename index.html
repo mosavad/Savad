@@ -304,6 +304,9 @@ html.rm-on .sheet>.poems>div.reveal{align-items:stretch}
 html.rm-on .poem{display:flex;flex-direction:column}
 html.rm-on .poem>.verse{margin-bottom:1.1rem}
 html.rm-on .poem>.poem-desc{margin-top:auto}
+html.rm-on .poem>.toggle{margin-bottom:1rem}
+/* tablet: second poem shows 6 lines, its 7th line comes with "Read the full poem" */
+html.rm-on .poem:not(.open) .t6{display:none}
 html.rm-on .sheet>.about{align-content:center}
 .rm-more:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 .rm.is-open>.rm-more{position:static;display:block;margin-top:.5rem;padding:0;background:none;line-height:1.4}
@@ -418,7 +421,7 @@ html.rm-on .sheet>.about{align-content:center}
       <h3 lang="ml">മനുഷ്യയന്ത്രം</h3>
       <div class="verse" lang="ml">
         <p>മണി അഞ്ചടിച്ചപ്പോൾ<br>ഉറക്കച്ചടവ് മാറ്റി<br>ഞാൻ ഉണർന്നെണീറ്റു.</p>
-        <p>അടുത്ത മുറിയിൽ നിന്നൊരു –<br>അമ്മയുടെ ഹായ്;<br>തിരക്കിട്ടൊരു ഹായ് തിരിച്ചയച്ച്<br>സ്വിഗ്ഗിയില്‍ ഒരു ചായ പറഞ്ഞു.</p>
+        <p>അടുത്ത മുറിയിൽ നിന്നൊരു –<br>അമ്മയുടെ ഹായ്;<br>തിരക്കിട്ടൊരു ഹായ് തിരിച്ചയച്ച്<br class="t6"><span class="t6">സ്വിഗ്ഗിയില്‍ ഒരു ചായ പറഞ്ഞു.</span></p>
         <div class="more" id="more-1" hidden>
           <p>പ്രഭാതകർമങ്ങളെല്ലാം<br>യന്ത്രങ്ങൾക്കു കൈമാറി,<br>പ്രാതലും കഴിച്ചിറങ്ങുമ്പോൾ<br>പകൽച്ചക്രം തിരിഞ്ഞുതുടങ്ങി.</p>
           <p>മണി ഒമ്പതടിച്ചപ്പോൾ<br>ഇ- ഓഫീസിലേക്ക് ഞാന്‍ നീങ്ങി.<br>ജോലിക്കായി റോബോട്ടുകളെല്ലാം<br>സജ്ജരാണെന്ന് ഉറപ്പുവരുത്തി.</p>
@@ -736,7 +739,7 @@ var dlg=$('#player'),list=[],cur=0,stack=[],si=0;
 /* ---- poems ---- */
 $$('.toggle').forEach(function(b){b.addEventListener('click',function(){
   var m=document.getElementById(b.getAttribute('aria-controls')),o=b.getAttribute('aria-expanded')==='true';
-  m.hidden=o;b.setAttribute('aria-expanded',o?'false':'true');b.querySelector('span').textContent=o?'Read the full poem':'Show less';});});
+  m.hidden=o;b.closest('.poem').classList.toggle('open',!o);b.setAttribute('aria-expanded',o?'false':'true');b.querySelector('span').textContent=o?'Read the full poem':'Show less';});});
 /* ---- resume: ?cv=library or ?cv=design decides which CV the button gives ---- */
 (function(){
   var CV={library:'Mohammed_Savad_CV_Library.pdf',design:'Mohammed_Savad_CV_Design.pdf'},b=$('#resumeBtn'),k='design',q='';
