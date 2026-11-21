@@ -296,6 +296,12 @@ h2{font-size:clamp(2.3rem,3.9vw,3.6rem);line-height:1}
 .sheet>.process ol>li p{font-size:clamp(.98rem,1.3vw,1.4rem);line-height:1.7;max-width:none;color:rgba(246,236,228,.72)}
 .sheet>.process ol>li:not(:last-child)::after{content:"\2192";position:absolute;right:clamp(1.2rem,1.8vw,2rem);bottom:clamp(1rem,2vw,1.8rem);font:400 clamp(1.6rem,2.4vw,2.6rem)/1 var(--body);color:var(--red);opacity:.7}
 }
+/* Tablet: long About and poem descriptions are clamped with an inline "Read more" (touch screens only) */
+html.rm-on .rm{position:relative;overflow:hidden}
+html.rm-on .rm.is-open{max-height:none!important;overflow:visible}
+.rm-more{position:absolute;right:0;bottom:0;padding:0 0 0 2.8rem;border:0;font:inherit;font-weight:600;color:var(--cream);cursor:pointer;background:linear-gradient(90deg,rgba(0,0,0,0),var(--rm-bg,#0f0f0f) 42%);line-height:inherit}
+.rm-more:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.rm.is-open>.rm-more{position:static;display:block;margin-top:.5rem;padding:0;background:none;line-height:1.4}
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -560,6 +566,36 @@ function stack(){
     s.style.setProperty('--fill',tall?'160px':'0px');
   });
 }
+/* ---- tablet "Read more" for About and poem descriptions (touch screens 768px+, inline like WhatsApp) ---- */
+var rmMQ=matchMedia('(min-width:768px) and (hover:none) and (pointer:coarse)');
+function rmBg(el){var layers=[];for(var n=el;n&&n.nodeType===1;n=n.parentElement){var c=getComputedStyle(n).backgroundColor.match(/[\d.]+/g);if(c){var a=c.length>3?parseFloat(c[3]):1;if(a>0)layers.push([+c[0],+c[1],+c[2],a]);if(a>=1)break;}}
+  var r=15,g=15,b=15;for(var i=layers.length-1;i>=0;i--){var L=layers[i];r=L[0]*L[3]+r*(1-L[3]);g=L[1]*L[3]+g*(1-L[3]);b=L[2]*L[3]+b*(1-L[3]);}
+  return 'rgb('+Math.round(r)+','+Math.round(g)+','+Math.round(b)+')';}
+function rmMake(wrap,first,lines){
+  wrap.classList.add('rm');
+  var btn=document.createElement('button');btn.type='button';btn.className='rm-more';btn.textContent='\u2026 Read more';btn.setAttribute('aria-expanded','false');
+  btn.addEventListener('click',function(){var open=wrap.classList.toggle('is-open');btn.textContent=open?'Read less':'\u2026 Read more';btn.setAttribute('aria-expanded',open?'true':'false');});
+  wrap.appendChild(btn);wrap._rm={first:first,lines:lines,btn:btn};
+}
+function rmMeasure(){
+  var on=rmMQ.matches;document.documentElement.classList.toggle('rm-on',on);
+  [].forEach.call($$('.rm'),function(w){
+    var d=w._rm;w.classList.remove('is-open');w.style.maxHeight='';d.btn.textContent='\u2026 Read more';d.btn.style.display='none';
+    if(!on)return;
+    var lh=parseFloat(getComputedStyle(d.first).lineHeight)||parseFloat(getComputedStyle(d.first).fontSize)*1.6;
+    var max=Math.round(lh*d.lines);w.style.maxHeight=max+'px';
+    if(w.scrollHeight>max+4){d.btn.style.display='';w.style.setProperty('--rm-bg',rmBg(w));}else{w.style.maxHeight='';}
+  });
+}
+(function(){
+  var body=$('.about__body');
+  if(body){var ps=[].filter.call(body.children,function(c){return c.tagName==='P'&&!c.classList.contains('about__lead')&&!c.classList.contains('kicker');});
+    if(ps.length){var w=document.createElement('div');body.insertBefore(w,ps[0]);ps.forEach(function(p){w.appendChild(p);});rmMake(w,ps[0],3);}}
+  [].forEach.call($$('.poem-desc'),function(d){var ps=d.querySelectorAll('p:not(.meta)');if(!ps.length)return;var p=ps[0];var w=document.createElement('div');p.parentNode.insertBefore(w,p);w.appendChild(p);rmMake(w,p,3);});
+  rmMeasure();
+  addEventListener('resize',rmMeasure);if(rmMQ.addEventListener)rmMQ.addEventListener('change',rmMeasure);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(rmMeasure);addEventListener('load',rmMeasure);
+})();
 /* Desktop: a section taller than the screen is scaled down uniformly until it fits one screen,
    so every section stops at the very top and the next slides over it, at any laptop size. */
 var restack=stack; /* the photo viewer below reuses the name 'stack' for a list, so keep our own handle on the function */
