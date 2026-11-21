@@ -265,9 +265,23 @@ h2{font-size:clamp(2.3rem,3.9vw,3.6rem);line-height:1}
 .sheet>#magazine>h2,.sheet>#magazine>.mag{width:100%}
 .sheet>#magazine>.mag{margin-bottom:0}
 }
-/* Desktop: short sections get the same one-screen height as the others, so they stop at the same place. Inner layout untouched. */
+/* Desktop: every stacked section has the same top spacing and its heading sits at the same height */
 @media(min-width:1025px){
-.sheet>.work,.sheet>.about,.sheet>.poems{min-height:100svh}
+.sheet{--P:calc(max(4.6rem,6vw) + clamp(1.8rem,5.2vh,3.2rem))}
+.sheet>.work,.sheet>.tools,.sheet>.process,.sheet>#magazine,.sheet>.poems{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-start;padding-top:calc(var(--P) / var(--z,1));padding-bottom:clamp(1.6rem,5vh,3.5rem)}
+.sheet>.work>*,.sheet>#magazine>*,.sheet>.poems>*{width:100%}
+.sheet>#magazine>h2,.sheet>.poems>h2{max-width:1400px;margin:0 auto clamp(1.6rem,6vh,4.2rem);font-size:clamp(2.3rem,3.9vw,3.6rem);line-height:1}
+.sheet>.tools .tools__grid{margin-block:auto}
+.sheet>.process>ol{margin-block:auto}
+.sheet>#magazine>.mag{max-width:1400px;margin:0 auto auto}
+.sheet>.poems>h2.reveal{max-width:1400px!important;display:block}
+.sheet>.poems>div.reveal{max-width:1400px!important;margin-block:auto!important}
+.sheet>.work>.work__head{max-width:calc(1400px + 2 * var(--g));margin-inline:auto}
+.sheet>.about{min-height:100svh;align-content:start;padding-top:calc(var(--P) / var(--z,1) - 2.6rem)}
+.sheet>.end{min-height:100svh;display:flex;flex-direction:column;padding-top:calc(var(--P) - 1.6rem)}
+.sheet>.end>*{max-width:1400px;width:100%}
+.sheet>.end>.end__grid{margin-block:clamp(1.2rem,5vh,3.5rem) auto}
+.sheet>.end>.end__base{margin-top:auto}
 }
 /* How I Work: desktop-only redesign (phones/tablets untouched) */
 @media(min-width:1025px){
@@ -548,24 +562,27 @@ function stack(){
 }
 /* Desktop: a section taller than the screen is scaled down uniformly until it fits one screen,
    so every section stops at the very top and the next slides over it, at any laptop size. */
+var restack=stack; /* the photo viewer below reuses the name 'stack' for a list, so keep our own handle on the function */
 var deskMQ=matchMedia('(min-width:1025px)');
+/* Only browsers that scale CSS zoom the standard way (Chrome, Edge, new Firefox) get the fit; others (older Safari) keep normal sizes. */
+var zoomOK=(function(){var t=document.createElement('div');t.style.cssText='position:absolute;left:-9999px;top:0;width:100px;height:100px;zoom:.5';document.body.appendChild(t);var w=t.getBoundingClientRect().width;document.body.removeChild(t);return Math.abs(w-50)<1;})();
 function fit(){
   var vh=stableVH();
   secs.forEach(function(s,i){
     if(i===secs.length-1)return;
-    s.style.zoom='';
-    if(!deskMQ.matches)return;
+    s.style.zoom='';s.style.removeProperty('--z');
+    if(!deskMQ.matches||!zoomOK)return;
     var f=1;
     for(var k=0;k<8;k++){
       var h=s.getBoundingClientRect().height;
       if(Math.abs(h-vh)<=1||(h<vh&&f>=1))break;
-      f=Math.max(.55,f*vh/h);s.style.zoom=f.toFixed(4);
+      f=Math.max(.55,f*vh/h);s.style.zoom=f.toFixed(4);s.style.setProperty('--z',f.toFixed(4));
     }
-    if(f>=1)s.style.zoom='';
+    if(f>=1||Math.abs(s.getBoundingClientRect().height-vh)>3){s.style.zoom='';s.style.removeProperty('--z');}
   });
-  stack();
+  restack();
 }
-addEventListener('resize',fit);addEventListener('orientationchange',fit);stack();fit();
+addEventListener('resize',fit);addEventListener('orientationchange',fit);restack();fit();
 addEventListener('load',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
 if('ResizeObserver' in window){var ro=new ResizeObserver(stack);secs.forEach(function(s){ro.observe(s);});}
 /* ---- header + in-page links: jump to a section from anywhere ----
