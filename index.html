@@ -782,9 +782,9 @@ var dlg=$('#player'),list=[],cur=0,stack=[],si=0;
 $$('.toggle').forEach(function(b){b.addEventListener('click',function(){
   var m=document.getElementById(b.getAttribute('aria-controls')),o=b.getAttribute('aria-expanded')==='true';
   m.hidden=o;b.closest('.poem').classList.toggle('open',!o);b.setAttribute('aria-expanded',o?'false':'true');b.querySelector('span').textContent=o?'Read the full poem':'Show less';});});
-/* ---- resume: ?cv=library, ?cv=design or ?cv=general decides which CV the button gives ---- */
+/* ---- resume: ?cv=library, ?cv=design, ?cv=general or ?cv=hsisc decides which CV the button gives ---- */
 (function(){
-  var CV={library:'Mohammed_Savad_CV_Library.pdf',design:'Mohammed_Savad_CV_Design.pdf',general:'Mohammed_Savad_CV_General.pdf'},b=$('#resumeBtn'),k='design',q='';
+  var CV={library:'Mohammed_Savad_CV_Library.pdf',design:'Mohammed_Savad_CV_Design.pdf',general:'Mohammed_Savad_CV_General.pdf',hsisc:'Mohammed_Savad_CV_HSISc.pdf'},b=$('#resumeBtn'),k='design',q='';
   try{q=(new URLSearchParams(location.search).get('cv')||'').toLowerCase();}catch(e){}
   if(q==='lib')q='library';
   if(q==='gen')q='general';
